@@ -13,7 +13,7 @@ const AdminSchema = new mongoose.Schema({
     password: {
         type: String
     },
-    accounttype:{
+   type:{
         type: String,
         required: true
     }

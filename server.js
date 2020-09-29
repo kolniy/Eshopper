@@ -1,5 +1,5 @@
 const express = require("express")
-const dbConnect = require("./config/connection")
+const dbConnect = require("./connection/connection")
 const app = express()
 
 // Initialise Middleware
@@ -10,7 +10,7 @@ const productsRoute = require('./routes/api/products')
 const ordersRoute = require('./routes/api/orders')
 const profileRoute = require('./routes/api/profile')
 const wishlistRoute = require('./routes/api/wishlist')
-const collectionsRoute = require('./routes/api/collections')
+const categoryRoute = require('./routes/api/category')
 const adminRoute = require('./routes/api/admin')
 
 const PORT = process.env.PORT || 5000
@@ -26,7 +26,7 @@ app.use('/api/products', productsRoute)
 app.use('/api/orders', ordersRoute)
 app.use('/api/profile', profileRoute)
 app.use('/api/wishlist', wishlistRoute)
-app.use('/api/collection', collectionsRoute)
+app.use('/api/category', categoryRoute)
 app.use('/api/admin', adminRoute)
 
 app.listen(PORT, () => {
