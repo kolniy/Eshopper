@@ -32,7 +32,8 @@ router.get('/', auth,  async (req, res) => {
 router.post('/', [
     body('name').not().isEmpty().trim(),
     body('email').not().isEmpty().isEmail(),
-    body('password').not().isEmpty().isLength({min:5})
+    body('password').not().isEmpty().isLength({min:5}),
+    body('type').not().isEmpty()
 ] ,async (req, res) => {
 
     // check validation result
@@ -45,7 +46,7 @@ router.post('/', [
 
     try {
 
-        const { name, email, password } = req.body
+        const { name, email, password, type } = req.body
 
         let user = await User.findOne({ email })
 
@@ -56,7 +57,8 @@ router.post('/', [
         user = new User({
             name,
             email,
-            password
+            password,
+            type
         })
 
         const saltRounds = 8
@@ -150,7 +152,8 @@ router.post('/login', [
 router.put('/', [auth,
         body('name').not().isEmpty(),
         body('email').isEmail(),
-        body('password').not().isEmpty()
+        body('password').not().isEmpty(),
+        body('type').not().isEmpty()
     ] , async (req , res) => {
 
         const errors = validationResult(req)
@@ -161,13 +164,14 @@ router.put('/', [auth,
         }
 
     try {
-        let { name, email, password } = req.body
+        let { name, email, password, type } = req.body
         const saltRounds = 8
         password = await bcrypt.hash(password, saltRounds)
         const updates = {
             name,
             email,
-            password
+            password,
+            type
         }
 
        const updatedUser = await User.findOneAndUpdate(

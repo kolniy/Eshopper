@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const Admin = require('../models/Admin')
+const User = require('../models/User')
 const tokenSecret = process.env.JWTTOKENSECRET
 
 const adminAuth =  async (req, res, next) => {
@@ -17,7 +17,7 @@ const adminAuth =  async (req, res, next) => {
 
         const payload = jwt.verify(token, tokenSecret)
     
-        const adminUser = await Admin.findById(payload.user.id)
+        const adminUser = await User.findById(payload.user.id)
     
         if(!adminUser){
             return res.status(400).json({
@@ -27,15 +27,15 @@ const adminAuth =  async (req, res, next) => {
             })
         }
     
-        if(adminUser.type === null){
+        if(adminUser.type !== 'admin'){
             return res.status(400).json({
                 errors: [{
-                    msg: "user not found"
+                    msg: "Bad Request"
                 }]
             })
         }
     
-        req.user = adminUser
+        req.user = payload.user
         next()
     } catch (error) {
         res.status(401).json({msg: 'Token is not valid'})

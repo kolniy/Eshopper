@@ -3,7 +3,6 @@ const router = express.Router()
 const Category = require('../../models/Category')
 const { body, validationResult } = require('express-validator')
 const adminAuth = require('../../middleware/adminAuth')
-const Admin = require('../../models/Admin')
 
 // route to get all collections
 // public

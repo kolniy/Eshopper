@@ -6,11 +6,11 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    short_desc: {
+    shortDesc: {
         type: String,
         required: true
     },
-    long_desc: {
+    longDesc: {
         type: String
     },
     price: {
@@ -18,23 +18,20 @@ const ProductSchema = mongoose.Schema({
         required: true
     },
     oldprice: {
-        type: Float,
-        required: true
+        type: Float
     },
-    images: {
-        type: [String],
+    image: {
+        type: String,
         required: true
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'Category',
+        required: true
     },
     availability: {
         type: Number, 
         required: true
-    },
-    condition: {
-        type: String
     },
     reviews: [{
         name: {
@@ -45,20 +42,19 @@ const ProductSchema = mongoose.Schema({
             type: String,
             required: true
         },
-        review: {
+        comment: {
             type: String
         },
         star: {
             type: Number,
             default: 0
         }
-    }],
-    timestamps: true,
-    date: {
-        type: Date,
-        default: Date.now
-    }
-})
+    }]
+},
+{
+  timestamps: true,
+}
+)
 
 const Product = mongoose.model('Product', ProductSchema)
 

@@ -5,7 +5,7 @@ const ProfileSchema = new mongooose.Schema({
         type: mongooose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    address: {
+    address : {
         type: String,
         required: true
     },
@@ -20,6 +20,9 @@ const ProfileSchema = new mongooose.Schema({
         type: String
     },
     zipcode: {
+        type: String
+    },
+    state: {
         type: String
     }
 })

@@ -1,5 +1,6 @@
 const express = require("express")
 const dbConnect = require("./connection/connection")
+const cloudinary = require('cloudinary').v2
 const app = express()
 
 // Initialise Middleware
@@ -11,7 +12,12 @@ const ordersRoute = require('./routes/api/orders')
 const profileRoute = require('./routes/api/profile')
 const wishlistRoute = require('./routes/api/wishlist')
 const categoryRoute = require('./routes/api/category')
-const adminRoute = require('./routes/api/admin')
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 const PORT = process.env.PORT || 5000
 dbConnect()
@@ -22,13 +28,13 @@ app.get('/', (req, res) => {
 
 //Application routes
 app.use('/api/users', usersRoute)
-app.use('/api/products', productsRoute)
+app.use('/api/product', productsRoute)
 app.use('/api/orders', ordersRoute)
 app.use('/api/profile', profileRoute)
 app.use('/api/wishlist', wishlistRoute)
 app.use('/api/category', categoryRoute)
-app.use('/api/admin', adminRoute)
+// app.use('/api/admin', adminRoute)
 
 app.listen(PORT, () => {
-    console.log(`App is running on ${PORT}`)
+    console.log(`App is running on port ${PORT}`)
 })
