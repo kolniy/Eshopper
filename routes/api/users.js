@@ -76,7 +76,7 @@ router.post('/', [
                 throw err
             }
 
-            res.status(201).json({
+            res.status(200).json({
                 token
             })
         })

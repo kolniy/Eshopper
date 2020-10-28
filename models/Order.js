@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Float = require('mongoose-float').loadType(mongoose)
 
 const OrderSchema = new mongoose.Schema({
     refnum : {
@@ -11,16 +12,34 @@ const OrderSchema = new mongoose.Schema({
         required: true
     }
     ],
-    owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    status: {
+    name: {
         type: String
     },
-    timestamps: true
-})
+    shippingDestination: {
+        type: String
+    },
+    amount: {
+      type: Float
+    },
+    payment_status: {
+        type: Boolean,
+        default: false
+    },
+    delivery_status: {
+        type: Boolean,
+        default: false
+    },
+    paidAt: {
+        type: Date
+    },
+    deliveredAt: {
+        type: Date
+    }
+},
+{
+    timestamps: true,
+}
+)
 
 const Order = mongoose.model('Order', OrderSchema)
 

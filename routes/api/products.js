@@ -8,6 +8,7 @@ const adminAuth = require('../../middleware/adminAuth')
 const auth = require('../../middleware/auth')
 const Product = require('../../models/Product')
 const Category = require('../../models/Category')
+const User = require('../../models/User')
 const dataUri = require('../../utils/dataUri')
 const mongoose = require('mongoose')
 
@@ -193,6 +194,8 @@ router.put('/image/:productId', [
     }
 })
 
+
+// route to update product details
 router.put('/details/:productId', [adminAuth], async (req, res) => {
     const {
         name,
@@ -234,9 +237,9 @@ router.put('/details/:productId', [adminAuth], async (req, res) => {
     }
 })
 
+// route to review product
+// user access 
 router.put('/review/:productId', auth, [
-    body('name').not().isEmpty(),
-    body('email').isEmail(),
     body('comment').not().isEmpty()
 ], async (req, res) => {
 
@@ -248,19 +251,9 @@ router.put('/review/:productId', auth, [
     }
 
     const {
-        name,
-        email,
         comment,
         star
     } = req.body
-
-    let userReview = {
-        name,
-        email,
-       comment
-    }
-
-    if (star) userReview.star = star
 
     try {
 
@@ -268,6 +261,7 @@ router.put('/review/:productId', auth, [
             _id: req.params.productId
         })
 
+        // checks for valid product 
         if(!product){
             return res.status(400).json({
                 errors: [{
@@ -276,10 +270,36 @@ router.put('/review/:productId', auth, [
             })
         }
 
-       product.reviews.unshift(userReview)
+    // search user who wants to review
+    const user = await User.findOne({
+        _id: req.user.id
+    })
 
-        await product.save()
-        res.json(product)
+    let userReview = {
+        name: user.name,
+        email: user.email,
+       comment
+    }
+
+    if (star) userReview.star = star
+
+   const userHasReview = product.reviews.indexOf(review => {
+       console.log(review)
+       review.email == "kolaniyi@gmail.com"
+    })
+
+    // if (userHasReview) {
+    //     return res.status(400).json({
+    //         eerrors: [{
+    //             msg: "user has review"
+    //         }]
+    //     })
+    // }
+    console.log(userHasReview)
+    product.reviews.unshift(userReview)
+
+    await product.save()
+    res.json(product)
 
     } catch (error) {
         console.error(error)
@@ -288,7 +308,8 @@ router.put('/review/:productId', auth, [
     
 })
 
-router.put('/review/:productId/:reviewId', adminAuth, async (req, res) => {
+// route to remove products review
+router.put('/review/:productId/:reviewId', auth, async (req, res) => {
     try {
         let product = await Product.findOne({
             _id: req.params.productId

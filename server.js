@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 //Application routes
 app.use('/api/users', usersRoute)
 app.use('/api/product', productsRoute)
-app.use('/api/orders', ordersRoute)
+app.use('/api/order', ordersRoute)
 app.use('/api/profile', profileRoute)
 app.use('/api/wishlist', wishlistRoute)
 app.use('/api/category', categoryRoute)

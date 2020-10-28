@@ -35,12 +35,10 @@ const ProductSchema = mongoose.Schema({
     },
     reviews: [{
         name: {
-            type: String,
-            required: true
+            type: String
         },
         email: {
-            type: String,
-            required: true
+            type: String
         },
         comment: {
             type: String
