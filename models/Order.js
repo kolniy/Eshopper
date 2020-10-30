@@ -12,10 +12,29 @@ const OrderSchema = new mongoose.Schema({
         required: true
     }
     ],
-    name: {
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    shippingAddress: {
         type: String
     },
-    shippingDestination: {
+    recipientNumber: {
+        type: String
+    },
+    recipientEmail: {
+        type: String
+    },
+    shippingCountry: {
+        type: String
+    },
+    shippingCity: {
+        type: String
+    },
+    shippingZipcode: {
+        type: String
+    },
+    shippingState: {
         type: String
     },
     amount: {

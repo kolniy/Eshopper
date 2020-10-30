@@ -283,24 +283,13 @@ router.put('/review/:productId', auth, [
 
     if (star) userReview.star = star
 
-   const userHasReview = product.reviews.indexOf(review => {
-       console.log(review)
-       review.email == "kolaniyi@gmail.com"
-    })
+    if(product.reviews.filter((review) => review.email.toString().toLowerCase() === user.email.toLowerCase()).length > 0) {
+        return res.status(400).json({msg: "User review already exists"})
+    }
 
-    // if (userHasReview) {
-    //     return res.status(400).json({
-    //         eerrors: [{
-    //             msg: "user has review"
-    //         }]
-    //     })
-    // }
-    console.log(userHasReview)
     product.reviews.unshift(userReview)
-
     await product.save()
     res.json(product)
-
     } catch (error) {
         console.error(error)
         res.status(500).send('Server error')
