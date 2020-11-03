@@ -33,7 +33,6 @@ app.use('/api/order', ordersRoute)
 app.use('/api/profile', profileRoute)
 app.use('/api/wishlist', wishlistRoute)
 app.use('/api/category', categoryRoute)
-// app.use('/api/admin', adminRoute)
 
 app.listen(PORT, () => {
     console.log(`App is running on port ${PORT}`)

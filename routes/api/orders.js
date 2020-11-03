@@ -21,8 +21,22 @@ router.get('/user', auth, async (req, res) => {
     res.json(orders)
 })
 
+// route to get a specific order
+router.get('/:orderId', auth, async (req, res) => {
+    const orderId = req.params.orderId
+    const order = await Order.findOne({
+        _id: orderId
+    })
+    if(!order){
+        return res.status(400).json({
+            msg: "Order not found"
+        })
+    }
+    res.json(order)
+})
+
 // route to initiate an order
-router.post('/initiate', [
+router.post('/create', [
     auth,
     body('address').not().isEmpty(),
     body('number').not().isEmpty(),
@@ -39,29 +53,100 @@ router.post('/initiate', [
         })
     }
 
-    const {
-        address,
-        number,
-        email,
-        country,
-        city,
-        zipcode,
-        state,
-        products
-    } = req.body
+    try {
+        const {
+            address,
+            number,
+            email,
+            country,
+            city,
+            zipcode,
+            state,
+            products
+        } = req.body
+    
+        const tax = 8.9
+        let orderTotal = 0.0
 
+        for(let i = 0; i < products.length; i++ ){
+            orderTotal += products[i].price 
+        }
 
+        const order = new Order({
+            refnum: uuidv4(),
+            products,
+            owner: req.user.id,
+            shippingAddress: address,
+            recipientNumber: number,
+            recipientEmail: email,
+            shippingCountry: country,
+            shippingCity: city,
+            shippingZipcode: zipcode,
+            shippingState: state,
+            amount: orderTotal + tax 
+        })
+        await order.save()
+        res.json(order)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({
+            errors: error
+        })
+    }
 })
 
 // route to make payment for an order
-router.put('/pay', auth, async (req, res) => {
+router.put('/pay/:orderId', auth, async (req, res) => {
+    const orderId = req.params.orderId
+    try {
+        let order = await Order.findOne({
+            _id: orderId
+        })
+        if(!order){
+            return res.status(400).json({
+                msg: "Order Not Found"
+            })
+        }
 
+        // @todo implement payment gateway here 
+        // using stripe
+        // if payment was successful
+        // we update the payment status for the order
+        // and we update the timestamp for the payment
+
+        order.paymentStatus = true
+        order.paidAt = Date.now()
+        await order.save()
+        res.json(order)
+    } catch (error) {
+        res.status(500).json({
+            errors: error
+         })
+    }
 })
 
 
-// route to update delivered status
-router.put('/delivered', adminAuth, async(req, res) => {
-
+// route to update delivery status
+router.put('/delivered/:orderId', adminAuth, async(req, res) => {
+    const orderId = req.params.orderId
+    try {
+        let order = await Order.findOne({
+            _id: orderId
+        })
+        if(!order){
+            return res.status(400).json({
+                msg: "Order Not Found"
+            })
+        }
+        order.deliveryStatus = true
+        order.deliveredAt = Date.now()
+        await order.save()
+        res.json(order)
+    } catch (error) {
+        res.status(500).json({
+           errors: error
+        })
+    }
 })
 
 module.exports = router

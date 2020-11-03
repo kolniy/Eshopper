@@ -6,13 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./server.js",
-    "server-dev": "env-cmd -f ./config/.dev.env nodemon server.js"
+    "server-dev": "env-cmd -f ./config/.dev.env nodemon server.js",
+    "client": "npm start --prefix client",
+    "server-app": "concurrently \"npm run server-dev\" \"npm run client\""
   },
   "author": "kolaniyi",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "2.4.3",
     "cloudinary": "1.23.0",
+    "concurrently": "5.3.0",
     "cors": "2.8.5",
     "datauri": "3.0.0",
     "env-cmd": "10.1.0",

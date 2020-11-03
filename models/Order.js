@@ -7,9 +7,22 @@ const OrderSchema = new mongoose.Schema({
         required: true
     },
     products: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        },
+        name: {
+            type: String
+        },
+        shortDesc: {
+            type: String
+        },
+        price: {
+            type: Float
+        },
+        image: {
+            type: String
+        }
     }
     ],
     owner: {
@@ -40,11 +53,11 @@ const OrderSchema = new mongoose.Schema({
     amount: {
       type: Float
     },
-    payment_status: {
+    paymentStatus: {
         type: Boolean,
         default: false
     },
-    delivery_status: {
+    deliveryStatus: {
         type: Boolean,
         default: false
     },
