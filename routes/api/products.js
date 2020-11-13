@@ -34,7 +34,11 @@ router.get('/:productId', async (req, res) => {
 // route to get all products
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find()
+        const queryOptions = {}
+        if(req.query.limit){
+            queryOptions.limit = parseInt(req.query.limit)
+        }
+        const products = await Product.find({}, null, queryOptions)
         res.json(products)
     } catch (error) {
         res.status(500).send('Server Error')
@@ -48,6 +52,12 @@ router.get('/category/:categoryname', async (req, res) => {
             name: req.params.categoryname
         })
 
+        const queryOptions = {}
+
+        if(req.query.limit){
+            queryOptions.limit = parseInt(req.query.limit)
+        }
+
         if(!validCate){
             return res.status(400).json({
                 errors: [{
@@ -58,11 +68,11 @@ router.get('/category/:categoryname', async (req, res) => {
 
         const products = await Product.find({
             category: validCate._id
-        })
-
+        }, null, queryOptions)
         res.json(products)
 
     } catch (error) {
+        console.error(error)
         res.status(500).send('Server Error')
     }
 })

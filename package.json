@@ -8,7 +8,7 @@
     "start": "node ./server.js",
     "server-dev": "env-cmd -f ./config/.dev.env nodemon server.js",
     "client": "npm start --prefix client",
-    "server-app": "concurrently \"npm run server-dev\" \"npm run client\""
+    "serve-app": "concurrently \"npm run server-dev\" \"npm run client\""
   },
   "author": "kolaniyi",
   "license": "ISC",
