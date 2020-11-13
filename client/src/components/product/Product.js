@@ -28,9 +28,7 @@ const Product = ({ match, getProduct, product, productLoading }) => {
                      </div>
                    </div>
                  {
-                     productLoading === true ? <Spinner /> : (
-                        <SingleProductDetails product={product} />
-                     ) 
+                     productLoading === false && product !== null ? <SingleProductDetails product={product} /> : <Spinner />
                  }
                </div>
            </div>

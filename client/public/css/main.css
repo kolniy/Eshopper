@@ -18,6 +18,16 @@
   position: relative;
 }
 
+.theme-color {
+  color: #fe980f;
+}
+
+.strike-through {
+  text-decoration: line-through;
+  color: #fe980f;
+  font-weight: 800;
+}
+
 .spinner-wrapper .spinner {
   width: 70px;
   height: 70px;

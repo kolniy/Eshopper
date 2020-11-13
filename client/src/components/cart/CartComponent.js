@@ -1,8 +1,16 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { connect } from "react-redux"
 import CartList from "./CartList"
+import { ToFixed } from "../../utils/financials"
 
-const CartComponent = () => {
+const CartComponent = ({ cart }) => {
+
+    const tax = 8.9
+    let cartSubTotal = cart.reduce((prev, curr) => {
+        return prev + curr.itemTotal
+    }, 0)
+
     return (
         <>
         <section id="cart_items">
@@ -34,8 +42,34 @@ const CartComponent = () => {
                     </div>
                 </div>
             </section>
+
+    <section id="do_action">
+		<div class="container">
+			<div class="heading">
+				<h3>What would you like to do next?</h3>
+				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="total_area">
+						<ul>
+							<li>Cart Sub Total <span>${ToFixed(cartSubTotal)}</span></li>
+							<li>Eco Tax <span>${tax}</span></li>
+							<li>Shipping Cost <span>Free</span></li>
+							<li>Total <span>${ (parseFloat(cartSubTotal) + parseFloat(tax)).toFixed(2) }</span></li>
+						</ul>
+							<Link to="/checkout" class="btn btn-default check_out">Check Out</Link>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
         </>
     )
 }
 
-export default CartComponent
+const mapStateToProps = (state) => ({
+    cart: state.cart
+})
+
+export default connect(mapStateToProps)(CartComponent)

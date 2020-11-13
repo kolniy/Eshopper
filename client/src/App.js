@@ -5,6 +5,8 @@ import Footer from "./components/layouts/Footer"
 import Landing from "./components/home/Landing"
 import Product from "./components/product/Product"
 import Cart from "./components/cart/CartComponent"
+import Products from "./components/product/Products"
+import ProductsCategory from "./components/product/ProductsCategory"
 
 
 // REDUX STOTE CONFIG
@@ -18,8 +20,10 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={Landing} />
+        <Route exact path="/products" component={Products} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/product/:productId" component={Product} />
+        <Route exact path="/products/category/:categoryName" component={ProductsCategory} />
       </Switch>
       <Footer />
     </Router>

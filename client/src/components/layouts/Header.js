@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from "react-router-dom"
+import { connect } from "react-redux"
 
-const Header = () => {
+const Header = ({ cart }) => {
         return (
             <div>
                 <header id="header">
@@ -44,7 +45,9 @@ const Header = () => {
 							<ul className="nav navbar-nav">
 								<li><Link to="/dashboard/user"><i className="fa fa-user"></i> Account</Link></li>
 								<li><Link to="/checkout"><i className="fa fa-crosshairs"></i> Checkout</Link></li>
-								<li><Link to="/cart"><i className="fa fa-shopping-cart"></i> Cart</Link></li>
+								<li><Link to="/cart"><i className="fa fa-shopping-cart"></i> Cart {
+									cart.length > 0 && <div className="badge">{cart.length}</div>
+								}</Link></li>
 								<li><Link to="/login"><i className="fa fa-lock"></i> Login</Link></li>
 							</ul>
 						</div>
@@ -93,4 +96,8 @@ const Header = () => {
         )
 }
 
-export default Header
+const mapStateToProps = (state) => ({
+	cart: state.cart
+})
+
+export default connect(mapStateToProps)(Header)

@@ -288,7 +288,8 @@ router.put('/review/:productId', auth, [
     let userReview = {
         name: user.name,
         email: user.email,
-       comment
+       comment,
+       date: Date.now()
     }
 
     if (star) userReview.star = star

@@ -6,7 +6,7 @@ const loadCart = () => {
 
 let cartList = []
 
-export const addToCart = ({ _id, image, name, price }) => {
+export const addToCart = ({ _id, image, name, price, quantity }) => {
     return (dispatch) => {
         const cartItem = {
             itemId: _id,
@@ -17,6 +17,11 @@ export const addToCart = ({ _id, image, name, price }) => {
             itemTotal: 1
         }
 
+        if(quantity !== undefined){
+            cartItem.itemQuantity = parseInt(quantity)
+        } else {
+            cartItem.itemQuantity = 1
+        }
         cartItem.itemTotal = cartItem.itemPrice * cartItem.itemQuantity
 
         cartList = loadCart() // load cart to get most recent cart items

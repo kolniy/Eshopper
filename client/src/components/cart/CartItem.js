@@ -5,13 +5,22 @@ import { Link } from "react-router-dom"
 import { ToFixed } from "../../utils/financials"
 
 const CartItem = ({ cartItem, removeItem, incrementItem, decrementItem }) => {
+
+    const checkCartAndDecrement = () => {
+        if(cartItem.itemQuantity > 1){
+            decrementItem(cartItem.itemId)
+        } else if(cartItem.itemQuantity === 1) {
+            removeItem(cartItem.itemId)
+        }
+    }
+
     return (
         <tr>
         <td className="cart_product">
-            <Link to={`/product/:${cartItem.itemId}`}> <img className="img-responsive" src={cartItem.itemImg} alt="" /></Link>
+            <Link to={`/product/${cartItem.itemId}`}> <img className="img-responsive" src={cartItem.itemImg} alt="" /></Link>
         </td>
         <td className="cart_description">
-    <h4><Link to={`/product/:${cartItem.itemId}`}>   {cartItem.itemName}</Link></h4>
+    <h4><Link to={`/product/${cartItem.itemId}`}>   {cartItem.itemName}</Link></h4>
         </td>
         <td className="cart_price">
             <p>{cartItem.itemPrice}</p>
@@ -20,7 +29,7 @@ const CartItem = ({ cartItem, removeItem, incrementItem, decrementItem }) => {
             <div className="cart_quantity_button">
                 <button className="cart_quantity_up" onClick={e => incrementItem(cartItem.itemId)}> + </button>
                 <input className="cart_quantity_input" type="text" name="quantity" value={cartItem.itemQuantity} autocomplete="off" size="2" />
-                <button className="cart_quantity_up" onClick={e => decrementItem(cartItem.itemId)}> - </button>
+                <button className="cart_quantity_up" onClick={e => checkCartAndDecrement()}> - </button>
             </div>
         </td>
         <td className="cart_total">

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 const FeatureProductItem = ({ productInfo, addProductToCart, cart }) => {
 
     return (
-    <Link to={`/product/${productInfo._id}`}>
+   
     <div className="col-sm-4">
     <div className="product-image-wrapper">
         <div className="single-products">
@@ -38,7 +38,6 @@ const FeatureProductItem = ({ productInfo, addProductToCart, cart }) => {
         </div>
     </div>
 </div>
-</Link>
 )
 }
 
