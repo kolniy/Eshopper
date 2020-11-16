@@ -7,6 +7,10 @@ import Product from "./components/product/Product"
 import Cart from "./components/cart/CartComponent"
 import Products from "./components/product/Products"
 import ProductsCategory from "./components/product/ProductsCategory"
+import RegisterOrLogin from "./components/auth/RegisterOrLogin"
+import Alert from "./components/layouts/Alert"
+import PrivateRoute from "./components/routing/PrivateRoute"
+import Checkout from "./components/checkout/Checkout"
 
 
 // REDUX STOTE CONFIG
@@ -18,12 +22,15 @@ function App() {
     <Provider store={store}>
     <Router>
       <Header />
+        <Alert />
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/products" component={Products} />
         <Route exact path="/cart" component={Cart} />
+        <Route exact path="/login/" component={RegisterOrLogin} />
         <Route exact path="/product/:productId" component={Product} />
         <Route exact path="/products/category/:categoryName" component={ProductsCategory} />
+        <PrivateRoute exact path="/checkout" component={Checkout} />
       </Switch>
       <Footer />
     </Router>

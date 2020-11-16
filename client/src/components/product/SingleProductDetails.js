@@ -58,17 +58,17 @@ const SingleProductDetails = ({ product: {
 
     return (
         <>
-        <div class="col-sm-9 padding-right">
-					<div class="product-details">
-						<div class="col-sm-5">
-							<div class="view-product">
+        <div className="col-sm-9 padding-right">
+					<div className="product-details">
+						<div className="col-sm-5">
+							<div className="view-product">
 								<img src={image} alt="" />
 							</div>
 
 						</div>
-						<div class="col-sm-7">
-							<div class="product-information">
-								<img src="images/product-details/new.jpg" class="newarrival" alt="" />
+						<div className="col-sm-7">
+							<div className="product-information">
+								<img src="/images/product-details/new.jpg" className="newarrival" alt="" />
                                 <h2 style={{textTransform:"uppercase"}}>{name}</h2>
                                 <p><b>Description:</b> {shortDesc}</p>
 								{/* todo how display rating in react  */}
@@ -88,19 +88,19 @@ const SingleProductDetails = ({ product: {
 						</div>
 					</div>
 					
-					<div class="category-tab shop-details-tab">
-						<div class="col-sm-12">
-							<ul class="nav nav-tabs">
+					<div className="category-tab shop-details-tab">
+						<div className="col-sm-12">
+							<ul className="nav nav-tabs">
 								<li><a href="#details" data-toggle="tab">Details</a></li>
-                                <li class="active"><a href="#reviews" data-toggle="tab">Reviews {reviews.length}</a></li>
+                                <li className="active"><a href="#reviews" data-toggle="tab">Reviews {reviews.length}</a></li>
 							</ul>
 						</div>
-						<div class="tab-content">
-							<div class="tab-pane fade" id="details" >
+						<div className="tab-content">
+							<div className="tab-pane fade" id="details" >
                                 <p>{longDesc}</p>
 							</div>
 							
-							<div class="tab-pane fade active in" id="reviews" >
+							<div className="tab-pane fade active in" id="reviews" >
 								{
 									<>
 									<ReviewList reviews={reviews} />

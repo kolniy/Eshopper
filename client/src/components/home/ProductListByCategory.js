@@ -11,8 +11,8 @@ const ProductListByCategory = ({ categoryProducts, getProductsByCategory, catego
     }, [categoryName, getProductsByCategory])
 
     return (
-           productsLoading === true ? <Spinner/> : <>{
-            categoryProducts.map((product) => <ProductCategoryItem  product={product} key={product._id} />)
+           productsLoading === true ? <Spinner/> : <> {
+             categoryProducts.length === 0 ? <p className="text-center">No Products in this Category</p> : categoryProducts.map((product) => <ProductCategoryItem  product={product} key={product._id} />)
            }
            </>
     )

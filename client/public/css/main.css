@@ -28,6 +28,11 @@
   font-weight: 800;
 }
 
+.spinner-for-singleProduct-page {
+  position: relative;
+  top: 20px;
+}
+
 .spinner-wrapper .spinner {
   width: 70px;
   height: 70px;
@@ -929,8 +934,8 @@ h2.title {
 }
 
 .productinfo img {
-  max-width: 268px;
-  max-height: 249px;
+  max-width: 270px;
+  max-height: 120px;
 }
 
 .productinfo {

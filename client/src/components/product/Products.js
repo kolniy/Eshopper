@@ -22,7 +22,7 @@ const Products = ({ products, loading, getProducts }) => {
                         }
     
                         <div className="shipping text-center">
-							<img src="images/home/shipping.jpg" alt="" />
+							<img src="/images/home/shipping.jpg" alt="" />
 						</div>
                         <br/>
                     </div>

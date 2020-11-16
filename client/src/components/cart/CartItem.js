@@ -14,7 +14,7 @@ const CartItem = ({ cartItem, removeItem, incrementItem, decrementItem }) => {
         }
     }
 
-    return (
+    return (<>
         <tr>
         <td className="cart_product">
             <Link to={`/product/${cartItem.itemId}`}> <img className="img-responsive" src={cartItem.itemImg} alt="" /></Link>
@@ -39,6 +39,7 @@ const CartItem = ({ cartItem, removeItem, incrementItem, decrementItem }) => {
             <button className="cart_quantity_delete" onClick={e => removeItem(cartItem.itemId)}><i className="fa fa-times"></i></button>
         </td>
     </tr> 
+    </>
     )
 }
 

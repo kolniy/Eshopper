@@ -22,13 +22,13 @@ const Product = ({ match, getProduct, product, productLoading }) => {
                                <CategoryList />
                            }
                          <div className="shipping text-center">
-							<img src="images/home/shipping.jpg" alt="" />
+							<img src="/images/home/shipping.jpg" alt="" />
 						</div>
                         <br/>
                      </div>
                    </div>
                  {
-                     productLoading === false && product !== null ? <SingleProductDetails product={product} /> : <Spinner />
+                     productLoading === false && product !== null ? <SingleProductDetails product={product} /> : <div className="spinner-for-singleProduct-page"><Spinner /></div>
                  }
                </div>
            </div>

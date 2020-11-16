@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const ReviewForm = ({ auth }) => {
     return <>
     {
-    auth.authenticated === false && auth.user === null ? <p className="text-center">Sign In <Link className="theme-color" to="/signin">Here</Link>, To Leave A Review</p> : (<>
+    !auth.authenticated && auth.user === null ? <p className="text-center">Sign In <Link className="theme-color" to="/login">Here</Link>, To Leave A Review</p> : (<>
         <p><b>Write Your Review</b></p>						
 				<form action="#">
 					<span>
