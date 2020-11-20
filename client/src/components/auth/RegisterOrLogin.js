@@ -1,9 +1,13 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
-import { Redirect } from "react-router-dom"
+import { Redirect, useLocation } from "react-router-dom"
 import { registerUser, loginUser } from "../../actions/auth"
 
-const Register = ({ authenticated, register, login, match }) => {
+const Register = ({ authenticated, register, login }) => {
+
+        const location = useLocation()
+        const params = new URLSearchParams(location.search)
+        const redirect = params.get('redirect')
 
     const [userRegDetails, updateUserRegDetails] = useState({
         name: '',
@@ -36,10 +40,10 @@ const Register = ({ authenticated, register, login, match }) => {
         login(userLoginDatails)
     }
 
-    console.log(match)
-
-    if(authenticated){
-       return <Redirect to="/" />
+    if(authenticated && redirect !== null){  // line to check that the user is authenticated and wants to checkout, so user can be redirected to checkout page after authentication
+       return <Redirect to="/checkout" />
+    } else if(authenticated){  // line simply checks for authentication and redirects home page
+        return <Redirect to="/" />
     }
 
     return <>

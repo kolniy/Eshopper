@@ -1631,6 +1631,7 @@ h2.title {
 
 #cart_items .cart_info .image {
   padding-left: 30px;
+  max-height: 150px;
 }
 
 #cart_items .cart_info .cart_description h4 {
@@ -1650,7 +1651,6 @@ h2.title {
 
 #cart_items .cart_info .cart_price p {
   color: #696763;
-  font-size: 18px;
 }
 
 #cart_items .cart_info .cart_total_price {

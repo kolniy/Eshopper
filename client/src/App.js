@@ -9,13 +9,15 @@ import Products from "./components/product/Products"
 import ProductsCategory from "./components/product/ProductsCategory"
 import RegisterOrLogin from "./components/auth/RegisterOrLogin"
 import Alert from "./components/layouts/Alert"
-import PrivateRoute from "./components/routing/PrivateRoute"
+// import PrivateRoute from "./components/routing/PrivateRoute"
 import Checkout from "./components/checkout/Checkout"
-
+import setAuthToken from "./utils/setAuthToken"
 
 // REDUX STOTE CONFIG
 import { Provider } from "react-redux";
 import store from "./store";
+
+setAuthToken(localStorage.getItem('token'))
 
 function App() {
   return (
@@ -30,7 +32,7 @@ function App() {
         <Route exact path="/login/" component={RegisterOrLogin} />
         <Route exact path="/product/:productId" component={Product} />
         <Route exact path="/products/category/:categoryName" component={ProductsCategory} />
-        <PrivateRoute exact path="/checkout" component={Checkout} />
+        <Route exact path="/checkout" component={Checkout} />
       </Switch>
       <Footer />
     </Router>

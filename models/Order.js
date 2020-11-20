@@ -14,14 +14,17 @@ const OrderSchema = new mongoose.Schema({
         name: {
             type: String
         },
-        shortDesc: {
-            type: String
-        },
         price: {
             type: Float
         },
         image: {
             type: String
+        },
+        quantity: {
+            type: Number
+        },
+        total: {
+            type: Float
         }
     }
     ],
@@ -38,6 +41,12 @@ const OrderSchema = new mongoose.Schema({
     recipientEmail: {
         type: String
     },
+    recipientFirstName: {
+        type: String
+    },
+    recipientLastName: {
+        type: String
+    },
     shippingCountry: {
         type: String
     },
@@ -48,6 +57,9 @@ const OrderSchema = new mongoose.Schema({
         type: String
     },
     shippingState: {
+        type: String
+    },
+    deliveryMsg: {
         type: String
     },
     amount: {

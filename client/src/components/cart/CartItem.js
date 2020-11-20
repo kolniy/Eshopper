@@ -14,10 +14,14 @@ const CartItem = ({ cartItem, removeItem, incrementItem, decrementItem }) => {
         }
     }
 
+    const noAction = () => {
+        return
+    }
+
     return (<>
         <tr>
         <td className="cart_product">
-            <Link to={`/product/${cartItem.itemId}`}> <img className="img-responsive" src={cartItem.itemImg} alt="" /></Link>
+            <Link to={`/product/${cartItem.itemId}`}> <img className="image" src={cartItem.itemImg} alt="" /></Link>
         </td>
         <td className="cart_description">
     <h4><Link to={`/product/${cartItem.itemId}`}>   {cartItem.itemName}</Link></h4>
@@ -28,7 +32,7 @@ const CartItem = ({ cartItem, removeItem, incrementItem, decrementItem }) => {
         <td className="cart_quantity">
             <div className="cart_quantity_button">
                 <button className="cart_quantity_up" onClick={e => incrementItem(cartItem.itemId)}> + </button>
-                <input className="cart_quantity_input" type="text" name="quantity" value={cartItem.itemQuantity} autocomplete="off" size="2" />
+                <input className="cart_quantity_input" onChange={e => noAction(e)} type="text" name="quantity" value={cartItem.itemQuantity} size="2" />
                 <button className="cart_quantity_up" onClick={e => checkCartAndDecrement()}> - </button>
             </div>
         </td>
