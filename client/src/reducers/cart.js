@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, DECREMENT_CART_ITEM, INCREMENT_CART_ITEM } from "../actions/types"
+import { ADD_TO_CART, REMOVE_FROM_CART, DECREMENT_CART_ITEM, INCREMENT_CART_ITEM, CLEAR_CART } from "../actions/types"
 
 const initialState = localStorage.getItem('cartList') === null ? [] : JSON.parse(localStorage.getItem('cartList'))
 
@@ -25,7 +25,7 @@ const cartReducer = (state = initialState, action ) => {
                 }
             })
         case DECREMENT_CART_ITEM: 
-        return state.map((item) => {
+            return state.map((item) => {
             if(item.itemId === payload.id){
                 return {
                     ...item,
@@ -34,7 +34,9 @@ const cartReducer = (state = initialState, action ) => {
             } else {
                return item
             }
-        })              
+        })
+        case CLEAR_CART: 
+            return []
         default:
            return state
     }

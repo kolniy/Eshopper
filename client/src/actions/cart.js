@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, DECREMENT_CART_ITEM, INCREMENT_CART_ITEM } from "./types"
+import { ADD_TO_CART, REMOVE_FROM_CART, DECREMENT_CART_ITEM, INCREMENT_CART_ITEM, CLEAR_CART } from "./types"
 
 const loadCart = () => {
        return JSON.parse(localStorage.getItem("cartList") || "[]")
@@ -104,5 +104,14 @@ export const decrementCartItem = (id) => {
             }
         })
 
+    }
+}
+
+export const clearCart = () => {
+    return (dispatch) => {
+        localStorage.removeItem('cartList')
+        dispatch({
+            type: CLEAR_CART
+        })
     }
 }

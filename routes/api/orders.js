@@ -39,6 +39,8 @@ router.get('/:orderId', auth, async (req, res) => {
 router.post('/create', [
     auth,
     body('address').not().isEmpty(),
+    body('firstname').not().isEmpty(),
+    body('lastname').not().isEmpty(),
     body('number').not().isEmpty(),
     body('email').isEmail(),
     body('country').not().isEmpty(),
@@ -58,6 +60,9 @@ router.post('/create', [
             address,
             number,
             email,
+            firstname,
+            lastname,
+            message,
             country,
             city,
             zipcode,
@@ -66,24 +71,25 @@ router.post('/create', [
         } = req.body
     
         const tax = 8.9
-        let orderTotal = 0.0
-
-        for(let i = 0; i < products.length; i++ ){
-            orderTotal += products[i].price 
-        }
+        let orderTotal = products.reduce((prev, curr) => {
+            return prev + curr.total
+        }, 0)
 
         const order = new Order({
             refnum: uuidv4(),
             products,
             owner: req.user.id,
             shippingAddress: address,
+            recipientFirstName: firstname,
+            recipientLastName: lastname,
             recipientNumber: number,
             recipientEmail: email,
             shippingCountry: country,
             shippingCity: city,
             shippingZipcode: zipcode,
             shippingState: state,
-            amount: orderTotal + tax 
+            deliveryMsg: message,
+            amount: parseFloat(parseFloat(orderTotal) + parseFloat(tax)).toFixed(2)
         })
         await order.save()
         res.json(order)

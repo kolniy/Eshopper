@@ -9,8 +9,9 @@ import Products from "./components/product/Products"
 import ProductsCategory from "./components/product/ProductsCategory"
 import RegisterOrLogin from "./components/auth/RegisterOrLogin"
 import Alert from "./components/layouts/Alert"
-// import PrivateRoute from "./components/routing/PrivateRoute"
+import PrivateRoute from "./components/routing/PrivateRoute"
 import Checkout from "./components/checkout/Checkout"
+import Order from "./components/order/Order"
 import setAuthToken from "./utils/setAuthToken"
 
 // REDUX STOTE CONFIG
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/product/:productId" component={Product} />
         <Route exact path="/products/category/:categoryName" component={ProductsCategory} />
         <Route exact path="/checkout" component={Checkout} />
+        <PrivateRoute path="/order/:orderId" component={Order} />
       </Switch>
       <Footer />
     </Router>

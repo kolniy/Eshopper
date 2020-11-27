@@ -1,9 +1,10 @@
-import { CREATE_ORDER } from "../actions/types"
+import { CREATE_ORDER, GET_ORDER, ORDER_ERROR } from "../actions/types"
 
 const initialState = {
     order: null,
     orders: [],
-    loading: true
+    loading: true,
+    error: {}
 }
 
 const ordersReducer = (state = initialState, action) => {
@@ -16,6 +17,18 @@ const ordersReducer = (state = initialState, action) => {
                     order: payload,
                     loading: false
                 }
+            case GET_ORDER: 
+                return   {
+                    ...state,
+                    order: payload,
+                    loading: false
+                }    
+            case ORDER_ERROR:
+                return {
+                    ...state,
+                    loading: false,
+                    error: payload
+                }    
             default:
                return state;
         }

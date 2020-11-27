@@ -1,11 +1,12 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
-import { Redirect, Link } from "react-router-dom"
+import { Redirect, Link, withRouter } from "react-router-dom"
+import { createOrder } from "../../actions/order"
 import CartList from "../cart/CartList"
 import Spinner from "../../components/layouts/Spinner"
 import { ToFixed } from "../../utils/financials"
 
-const Checkout = ({ authenticated, user, cart }) => {
+const Checkout = ({ authenticated, user, cart, createOrder, history }) => {
 
     const [checkoutInfo, updateCheckoutInfo] = useState({
         shippingAddress:'',
@@ -54,8 +55,46 @@ const Checkout = ({ authenticated, user, cart }) => {
                 total: cartItem.itemTotal
             }
         })
-        console.log(checkoutInfo, "checkout Info")
-        console.log(products, "products in Cart")
+        const clientDetails = {
+            firstname:recipientFirstName,
+            lastname: recipientLastName,
+            address: shippingAddress,
+            number: recipientNumber,
+            email: recipientEmail,
+            country: shippingCountry,
+            city: shippingCity,
+            zipcode: shippingZipcode,
+            state: shippingState,
+            message:deliveryMsg
+        }
+
+        const {
+            firstname,
+            lastname,
+            address,
+            number,
+            email,
+            country,
+            city,
+            zipcode,
+            state,
+            message
+        } = clientDetails
+
+        createOrder({
+            firstname,
+            lastname,
+            address,
+            number,
+            email,
+            country,
+            city,
+            zipcode,
+            state,
+            message,
+            products
+        }, history)
+
     }
 
     const noAction = (e) => {
@@ -169,10 +208,18 @@ const Checkout = ({ authenticated, user, cart }) => {
       </>
 }
 
+// eshopper todo list
+// 1. remeber to add loading spinner to loogin, sign up and checkout buttons
+// 2. work on the comment review system for single products 
+
 const mapStateToProps = (state) => ({
     authenticated: state.auth.authenticated,
     user: state.auth.user,
     cart: state.cart
 })
 
-export default connect(mapStateToProps)(Checkout)
+const mapDispatchToProps = (dispatch) => ({
+    createOrder: (order, history) => dispatch(createOrder(order, history))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Checkout))
