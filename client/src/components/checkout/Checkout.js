@@ -45,6 +45,7 @@ const Checkout = ({ authenticated, user, cart, createOrder, history }) => {
     })
 
     const submitCheckoutInfo = (e) => {
+
         const products = cart.map((cartItem) => {
             return {
                 id: cartItem.itemId,
@@ -209,8 +210,9 @@ const Checkout = ({ authenticated, user, cart, createOrder, history }) => {
 }
 
 // eshopper todo list
-// 1. remeber to add loading spinner to loogin, sign up and checkout buttons
-// 2. work on the comment review system for single products 
+// 1. work on the comment review system for single products 
+// 2. add reviewing system for the products
+// 3. create DOM for displaying individual Order, with payment status
 
 const mapStateToProps = (state) => ({
     authenticated: state.auth.authenticated,

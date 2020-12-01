@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { connect } from "react-redux"
 import { Redirect, useLocation } from "react-router-dom"
 import { registerUser, loginUser } from "../../actions/auth"
+import { Link } from "react-router-dom"
 
 const Register = ({ authenticated, register, login }) => {
 
@@ -32,11 +33,13 @@ const Register = ({ authenticated, register, login }) => {
 
     const onRegSubmit = (e) => {
         e.preventDefault()
+        e.target.childNodes[3].innerText = "Please wait..."
         register(userRegDetails)
     }
 
     const onLoginSubmit = (e) => {
         e.preventDefault()
+        e.target.childNodes[2].innerText = "Please wait..."
         login(userLoginDatails)
     }
 
@@ -54,10 +57,12 @@ const Register = ({ authenticated, register, login }) => {
 					<div className="login-form">
 						<h2>Login to your account</h2>
 						<form onSubmit={e => onLoginSubmit(e)}>
-							<input type="email" required onChange={e => updateLog(e)} name="email" placeholder="Your Email" />
-							<input type="password" required onChange={e => updateLog(e)} name="password" placeholder="Password" />
+							<input type="email" value={userLoginDatails.email} required onChange={e => updateLog(e)} name="email" placeholder="Your Email" />
+							<input type="password" value={userLoginDatails.password} required onChange={e => updateLog(e)} name="password" placeholder="Password" />
 							<button type="submit" className="btn btn-default">Login</button>
 						</form>
+                        <br />
+                        <p>Forgot your password. Click <Link className="theme-color" to="/resetpassword">Here</Link></p>
 					</div>
 				</div>
 				<div className="col-sm-1">

@@ -58,7 +58,9 @@ const CartComponent = ({ cart }) => {
 							<li>Shipping Cost <span>Free</span></li>
 							<li>Total <span>${ (parseFloat(cartSubTotal) + parseFloat(tax)).toFixed(2) }</span></li>
 						</ul>
-							<Link to="/checkout" className="btn btn-default check_out">Check Out</Link>
+						{
+                            cart.length === 0 ? <p className="text-center">Cart is empty, Cannot proceed to checkout!</p> : 	<Link to="/checkout" className="btn btn-default check_out">Check Out</Link>
+                        }
 					</div>
 				</div>
 			</div>
