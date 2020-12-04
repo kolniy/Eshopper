@@ -1,4 +1,4 @@
-import { GET_PRODUCT ,GET_PRODUCTS, GET_PRODUCTS_BY_CATEGORY, PRODUCT_ERROR } from '../actions/types'
+import { GET_PRODUCT ,GET_PRODUCTS, GET_PRODUCTS_BY_CATEGORY, PRODUCT_ERROR, ADD_PRODUCT_REVIEW } from '../actions/types'
 
 const initialState = {
     allProducts: [],
@@ -24,10 +24,19 @@ const productReducer = (state = initialState, action) => {
                 productsCategory: payload,
                 loading: false
             }
-        case GET_PRODUCT: 
+        case GET_PRODUCT:    
             return {
                 ...state,
                 product: payload,
+                loading: false
+            }
+        case ADD_PRODUCT_REVIEW: 
+            return {
+                ...state,
+                product: {
+                    ...state.products,
+                        reviews: payload
+                },
                 loading: false
             }
         case PRODUCT_ERROR:

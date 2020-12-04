@@ -1,4 +1,4 @@
-import { CREATE_ORDER, GET_ORDER, ORDER_ERROR} from "./types"
+import { GET_ORDER, ORDER_ERROR} from "./types"
 import { clearCart } from "./cart"
 import axios from "axios"
 import { setAlert } from "./alert"
@@ -13,10 +13,6 @@ export const createOrder = (orderData, history) => {
         const body = JSON.stringify(orderData)
         try {
             const res = await axios.post('/api/order/create', body, config)
-            dispatch({
-                type: CREATE_ORDER,
-                payload: res.data
-            })
             dispatch(setAlert("Order was placed Successfully", 'success'))
             dispatch(clearCart())
             history.push(`/order/${res.data._id}`)
@@ -45,8 +41,9 @@ export const getOrder = (orderId) => {
             const res = await axios.get(`/api/order/${orderId}`)
             dispatch({
                 type: GET_ORDER,
-                payload: res
+                payload: res.data
             })
+            console.log(orderId)
         } catch (err) {
             dispatch({
                 type: ORDER_ERROR,

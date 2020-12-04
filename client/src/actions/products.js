@@ -1,5 +1,6 @@
 import axios from "axios"
-import { GET_PRODUCT, GET_PRODUCTS_BY_CATEGORY, GET_PRODUCTS, PRODUCT_ERROR } from "./types"
+import { GET_PRODUCT, GET_PRODUCTS_BY_CATEGORY, GET_PRODUCTS, PRODUCT_ERROR, ADD_PRODUCT_REVIEW } from "./types"
+import { setFormAlert } from "./setFormAlert"
 
 // gets products for the feature item section of the homepage
 export const getProductsForHomePage = () => {
@@ -86,8 +87,8 @@ export const getProductsByCategory = (categoryName) => {
 // gets single products for product page 
 export const getProduct = (id) => {
     return async (dispatch) => {
-        const res = await axios.get(`/api/product/${id}`)
         try {
+        const res = await axios.get(`/api/product/${id}`)
             dispatch({
                 type: GET_PRODUCT,
                 payload: res.data
@@ -101,5 +102,36 @@ export const getProduct = (id) => {
                 }
             })
         }
+    }
+}
+
+export const reviewProduct = ({ comment, star }, productId ) => {
+    return async (dispatch) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        const body = JSON.stringify({ comment, star })
+        try {
+            const res = await axios.put(`/api/product/review/${productId}`, body, config)
+            dispatch({
+                type: ADD_PRODUCT_REVIEW,
+                payload: res.data
+            })
+            dispatch(setFormAlert('Review added successfully', 'success'))
+        } catch (err) {
+            const errors = err.response.data.errors
+            dispatch({
+                type: PRODUCT_ERROR,
+                payload: err
+            })
+            if(errors) {
+                errors.forEach((error) => {
+                    dispatch(setFormAlert(error.msg, 'danger'))
+                })
+            }
+        }
+
     }
 }

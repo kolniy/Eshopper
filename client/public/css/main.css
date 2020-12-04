@@ -28,10 +28,78 @@
   font-weight: 800;
 }
 
-.spinner-for-singleProduct-page {
-  position: relative;
-  top: 20px;
+.shipping-section {
+  border-left: 1px solid #F0F0E9;
+  border-right: 1px solid #F0F0E9;
+  border-bottom: 1px solid #f0f0e9;
+  padding: 0 15px 40px 15px;
+  margin: 20px;
+  max-width: 100%;
+  width: 100%;
 }
+
+.shipping-section .order-head-style{
+  text-transform: uppercase;
+  font-weight: 650;
+  font-size: 15px;
+}
+
+.shipping-section p {
+  color: #333232;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.payment-section {
+  border-left: 1px solid #F0F0E9;
+  border-right: 1px solid #F0F0E9;
+  border-bottom: 1px solid #f0f0e9;
+  padding: 0 15px 40px 15px;
+  margin: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.payment-section .order-head-style{
+  text-transform: uppercase;
+  font-weight: 650;
+  font-size: 15px;
+}
+
+.payment-section .total {
+  font-size: 19px;
+  font-weight: 550; 
+}
+
+.payment-section p {
+  color: #333232;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.order-items-section {
+  border-left: 1px solid #F0F0E9;
+  border-right: 1px solid #F0F0E9;
+  border-bottom: 1px solid #f0f0e9;
+  padding: 0 15px 40px 15px;
+  margin: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.pay-action {
+  border-left: 1px solid #F0F0E9;
+  border-right: 1px solid #F0F0E9;
+  border-bottom: 1px solid #f0f0e9;
+  padding: 0 15px 40px 15px;
+  margin: 20px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.margin-top-for-spinner-page {
+  margin-top: 30px;
+} 
 
 .spinner-wrapper .spinner {
   width: 70px;

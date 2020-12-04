@@ -37,7 +37,8 @@ function App() {
         <Route exact path="/products/category/:categoryName" component={ProductsCategory} />
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/resetpassword" component={ResetPassword} />
-        <PrivateRoute path="/order/:orderId" component={Order} />
+        {/* <PrivateRoute path="/order/:orderId" component={Order} /> */}
+        <Route path="/order/:orderId" component={Order} />
       </Switch>
       <Footer />
     </Router>

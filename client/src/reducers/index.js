@@ -4,7 +4,8 @@ import category from "./category"
 import cart from "./cart"
 import auth from "./auth"
 import alert from "./alert"
-import order from "./order"
+import orders from "./order"
+import formAlert from "./formAlert"
 
 export default combineReducers({
     products,
@@ -12,5 +13,6 @@ export default combineReducers({
     cart,
     auth,
     alert,
-    order
+    orders,
+    formAlert
 })

@@ -286,21 +286,25 @@ router.put('/review/:productId', auth, [
     })
 
     let userReview = {
-        name: user.name,
-        email: user.email,
+       name: user.name,
+       email: user.email,
        comment,
        date: Date.now()
     }
 
     if (star) userReview.star = star
 
-    if(product.reviews.filter((review) => review.email.toString().toLowerCase() === user.email.toLowerCase()).length > 0) {
-        return res.status(400).json({msg: "User review already exists"})
+    if(product.reviews.filter((review) => review.email.toString().toLowerCase() === user.email.toString().toLowerCase()).length > 0) {
+        return res.status(400).json({
+            errors: [{
+                msg: "User review already exists"
+            }]
+        })
     }
 
     product.reviews.unshift(userReview)
     await product.save()
-    res.json(product)
+    res.json(product.reviews)
     } catch (error) {
         console.error(error)
         res.status(500).send('Server error')

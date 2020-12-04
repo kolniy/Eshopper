@@ -35,12 +35,27 @@ const Register = ({ authenticated, register, login }) => {
         e.preventDefault()
         e.target.childNodes[3].innerText = "Please wait..."
         register(userRegDetails)
+        updateUserRegDetails({
+            name: '',
+            email: '',
+            password: ''
+        })
+        if(!authenticated){
+            e.target.childNodes[3].innerText = "Signup"
+        }
     }
 
     const onLoginSubmit = (e) => {
         e.preventDefault()
         e.target.childNodes[2].innerText = "Please wait..."
         login(userLoginDatails)
+        updateUserLoginDetails({
+            email: '',
+            password: ''
+        })
+        if(!authenticated){
+            e.target.childNodes[2].innerText = "Login"
+        }
     }
 
     if(authenticated && redirect !== null){  // line to check that the user is authenticated and wants to checkout, so user can be redirected to checkout page after authentication

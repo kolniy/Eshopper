@@ -37,10 +37,10 @@ const ProductSchema = mongoose.Schema({
         name: {
             type: String
         },
-        email: {
+        comment: {
             type: String
         },
-        comment: {
+        email: {  // email added to keep track of user's who have already added reviews. even though it won't be displayed
             type: String
         },
         star: {

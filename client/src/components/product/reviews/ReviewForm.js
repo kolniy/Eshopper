@@ -1,20 +1,37 @@
-import React from "react"
+import React, { useState } from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import StartRatings from "react-star-ratings"
+import { reviewProduct } from "../../../actions/products"
 
-const ReviewForm = ({ auth }) => {
+const ReviewForm = ({ auth, addProductReview, productId }) => {
+
+	const [ reviewComment, updateComment ] = useState('')
+	const [ star, updateStar ] = useState(0)
+
+	const changeProductRating = (rating) => {
+		updateStar(rating)
+	}
+
+	const submitReview = (e) => {
+		e.preventDefault()
+		addProductReview({
+			comment: reviewComment,
+			star
+		}, productId)
+
+		updateComment('')
+		updateStar(0)
+	}
+
     return <>
     {
     !auth.authenticated && auth.user === null ? <p className="text-center">Sign In <Link className="theme-color" to="/login">Here</Link>, To Leave A Review</p> : (<>
         <p><b>Write Your Review</b></p>						
-				<form action="#">
-					<span>
-					<input type="text" placeholder="Your Name"/>
-					<input type="email" placeholder="Email Address"/>
-					</span>
-					<textarea name="" ></textarea>
-					<b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-					<button type="button" class="btn btn-default pull-right">
+				<form onSubmit={e => submitReview(e)}>
+					<textarea required name="comment" value={reviewComment} onChange={e => updateComment(e.target.value)}></textarea>
+					<b>Rating: </b> <StartRatings starHoverColor="orangered" rating={star} starDimension='30px' starRatedColor="orangered" changeRating={changeProductRating} numberOfStars={5} starSpacing='4px' name='rating' />
+					<button type="submit" className="btn btn-default pull-right">
 				Submit
 			</button>
 		</form>
@@ -24,7 +41,12 @@ const ReviewForm = ({ auth }) => {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth
+	auth: state.auth,
+	productId: state.products.product._id
 })
 
-export default connect(mapStateToProps)(ReviewForm)
+const mapDispatchToProps = (dispatch) => ({
+	addProductReview : (reviewData, productId) => dispatch(reviewProduct(reviewData, productId))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm)

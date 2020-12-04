@@ -2,8 +2,10 @@ import React, { useState } from "react"
 import { connect } from "react-redux"
 import { addToCart } from "../../actions/cart"
 import { Link } from "react-router-dom"
+import StartRatings from "react-star-ratings"
 import ReviewList from "./reviews/ReviewList"
 import ReviewForm from "./reviews/ReviewForm"
+import FormsAlert from "./../layouts/FormsAlert"
 
 const SingleProductDetails = ({ product: {
 	_id,
@@ -27,6 +29,10 @@ const SingleProductDetails = ({ product: {
 		}
 	}
 
+	const totalStar = reviews.reduce((prev, curr) => {
+		return prev + curr.star
+	}, 0)
+
 	const item = {
 		_id,
 		image,
@@ -46,8 +52,8 @@ const SingleProductDetails = ({ product: {
 			if(itemExistsInCart !== undefined){
 			return <Link className="btn btn-default add-to-cart" to="/cart">View Cart</Link>
 			} else {
-						return <button type="button" onClick={e => addProductToCart()} class="btn btn-fefault cart">
-				<i class="fa fa-shopping-cart"></i>
+						return <button type="button" onClick={e => addProductToCart()} className="btn btn-fefault cart">
+				<i className="fa fa-shopping-cart"></i>
 				Add to cart
 			</button>
 			}
@@ -71,7 +77,17 @@ const SingleProductDetails = ({ product: {
 								<img src="/images/product-details/new.jpg" className="newarrival" alt="" />
                                 <h2 style={{textTransform:"uppercase"}}>{name}</h2>
                                 <p><b>Description:</b> {shortDesc}</p>
-								{/* todo how display rating in react  */}
+								<b>Product Rating: </b> <StartRatings
+								  isSelectable={false}
+								  starHoverColor="orangered"
+								  rating={reviews.length === 0 ? 0 : totalStar / reviews.length} 
+								  starDimension='15px'
+								  isAggregateRating={true}
+								   starRatedColor="orangered"
+								  numberOfStars={5}
+								   starSpacing='2px'
+									name='rating'
+									 />
 								<span>
                                     <p><span>US ${price}</span></p>
 									<label>Quantity:</label>
@@ -81,7 +97,7 @@ const SingleProductDetails = ({ product: {
 									}
 								</span>
 								<p><b>Old Price:</b>{" "}{<span className="strike-through">{oldprice}</span>}</p>
-                                <p><b>Availability:</b>{" "}{availability} Left In Stock</p>
+                                <p><b>Availability:</b>{"  "}{availability} Left In Stock</p>
 								<p><b>Condition:</b> New</p>
 								<p><b>Product By:</b> E-SHOPPER</p>
 							</div>
@@ -103,6 +119,9 @@ const SingleProductDetails = ({ product: {
 							<div className="tab-pane fade active in" id="reviews" >
 								{
 									<>
+									<br/> <br/>
+									<br/> <br/>
+									<FormsAlert />
 									<ReviewList reviews={reviews} />
 									<ReviewForm />
 									</>
