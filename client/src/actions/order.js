@@ -43,7 +43,27 @@ export const getOrder = (orderId) => {
                 type: GET_ORDER,
                 payload: res.data
             })
-            console.log(orderId)
+        } catch (err) {
+            dispatch({
+                type: ORDER_ERROR,
+                payload: {
+             msg: err.response.statusText,
+             status: err.response.status,
+                }
+            })
+        }
+    }
+}
+
+export const updateOrderSuccessStatus = (orderId) => {
+    return async (dispatch) => {
+        try {
+            const res = await axios.put(`/api/order/updatePayStatus/${orderId}`)
+            dispatch({
+                type: GET_ORDER,
+                payload: res.data
+            })
+            dispatch(setAlert('Payment has Successfully been recieved for your order', 'success'))
         } catch (err) {
             dispatch({
                 type: ORDER_ERROR,

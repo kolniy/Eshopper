@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import CartList from "./CartList"
@@ -6,10 +6,15 @@ import { ToFixed } from "../../utils/financials"
 
 const CartComponent = ({ cart }) => {
 
-    const tax = 8.9
+    const tax = 0
     let cartSubTotal = cart.reduce((prev, curr) => {
         return prev + curr.itemTotal
     }, 0)
+
+    useEffect(() => {
+        document.documentElement.scrollTop = 0;
+		document.scrollingElement.scrollTop = 0;
+    }, [])
 
     return (
         <>

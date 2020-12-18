@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
 import { Redirect, Link, withRouter } from "react-router-dom"
 import { createOrder } from "../../actions/order"
@@ -7,6 +7,11 @@ import Spinner from "../../components/layouts/Spinner"
 import { ToFixed } from "../../utils/financials"
 
 const Checkout = ({ authenticated, user, cart, createOrder, history }) => {
+
+    useEffect(() => {
+        document.documentElement.scrollTop = 0;
+		document.scrollingElement.scrollTop = 0;
+    }, [])
 
     const [checkoutInfo, updateCheckoutInfo] = useState({
         shippingAddress:'',
@@ -34,7 +39,7 @@ const Checkout = ({ authenticated, user, cart, createOrder, history }) => {
         deliveryMsg
     } = checkoutInfo
 
-    const tax = 8.9
+    const tax = 0
     let cartSubTotal = cart.reduce((prev, curr) => {
         return prev + curr.itemTotal
     }, 0)
@@ -170,7 +175,7 @@ const Checkout = ({ authenticated, user, cart, createOrder, history }) => {
                               <input type="text" onChange={e => noAction(e)} value={user.name} placeholder="Display Name" />
                                 <input type="email" onChange={e => noAction(e)} value={user.email} placeholder="Email" />
                             </form>
-                            <button onClick={submitCheckoutInfo} className="btn btn-primary">Place Order</button>
+                            <button disabled={cart.length === 0} onClick={submitCheckoutInfo} className="btn btn-primary">Place Order</button>
                         </div>
                     </div>
                     <div className="col-sm-5 clearfix">
@@ -208,11 +213,6 @@ const Checkout = ({ authenticated, user, cart, createOrder, history }) => {
     <br/>
       </>
 }
-
-// eshopper todo list
-// 1. work on the comment review system for single products 
-// 2. add reviewing system for the products
-// 3. create DOM for displaying individual Order, with payment status
 
 const mapStateToProps = (state) => ({
     authenticated: state.auth.authenticated,

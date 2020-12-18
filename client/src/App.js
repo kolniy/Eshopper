@@ -12,7 +12,11 @@ import Alert from "./components/layouts/Alert"
 import PrivateRoute from "./components/routing/PrivateRoute"
 import Checkout from "./components/checkout/Checkout"
 import Order from "./components/order/Order"
+import PaymentSuccessPage from "./components/order/PaymentSuccessPage"
 import ResetPassword from "./components/auth/ResetPassword"
+
+// action to authenticate a user if a token exists.
+import { loadUser } from "./actions/auth"
 
 import setAuthToken from "./utils/setAuthToken"
 
@@ -21,6 +25,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 setAuthToken(localStorage.getItem('token'))
+store.dispatch(loadUser())
 
 function App() {
   return (
@@ -37,8 +42,8 @@ function App() {
         <Route exact path="/products/category/:categoryName" component={ProductsCategory} />
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/resetpassword" component={ResetPassword} />
-        {/* <PrivateRoute path="/order/:orderId" component={Order} /> */}
-        <Route path="/order/:orderId" component={Order} />
+        <PrivateRoute exact path="/order/:orderId" component={Order} />
+        <Route exact path="/order/paymentstatus/:orderId" component={PaymentSuccessPage} />
       </Switch>
       <Footer />
     </Router>

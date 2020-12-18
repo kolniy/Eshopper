@@ -1,12 +1,16 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 const ResetPassword = () => {
 
     const [email, updateEmail] = useState('')
     const resetPassword = (e) => {
         e.preventDefault()
-
     }
+
+    useEffect(() => {
+        document.documentElement.scrollTop = 0;
+		document.scrollingElement.scrollTop = 0;
+    }, [])
 
     return (
         <>

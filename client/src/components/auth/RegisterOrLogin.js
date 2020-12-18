@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
 import { Redirect, useLocation } from "react-router-dom"
 import { registerUser, loginUser } from "../../actions/auth"
@@ -20,6 +20,11 @@ const Register = ({ authenticated, register, login }) => {
         email: '',
         password: ''
     })
+
+    useEffect(() => {
+        document.documentElement.scrollTop = 0;
+		document.scrollingElement.scrollTop = 0;
+    }, [])
 
     const updateReg = (e) => updateUserRegDetails({
         ...userRegDetails,

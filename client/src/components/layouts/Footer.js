@@ -154,6 +154,7 @@ export const Footer = () => {
 			<div className="container">
 				<div className="row">
 					<p className="pull-left">Copyright © 2020 E-SHOPPER Inc. All rights reserved.</p>
+					<p className="pull-left">Developed By  <span><a target="_blank" rel="noreferrer" href="https://www.kolaniyi.com/">kolawole olaniyi</a></span></p>
 					<p className="pull-right">Template by <span><a target="_blank" rel="noreferrer" href="http://www.themeum.com">Themeum</a></span></p>
 				</div>
 			</div>

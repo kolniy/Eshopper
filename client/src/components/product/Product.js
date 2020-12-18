@@ -9,6 +9,8 @@ const Product = ({ match, getProduct, product, productLoading }) => {
 
     useEffect(() => {
         getProduct(match.params.productId)
+        document.documentElement.scrollTop = 0;
+		document.scrollingElement.scrollTop = 0;
     }, [getProduct, match.params.productId])
 
     return (

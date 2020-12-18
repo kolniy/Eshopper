@@ -52,7 +52,7 @@ router.post('/create', [
     if(!errors.isEmpty()){
         return res.status(400).json({
             errors: errors.array()
-        })
+        }) 
     }
 
     try {
@@ -70,7 +70,6 @@ router.post('/create', [
             products
         } = req.body
     
-        const tax = 8.9
         let orderTotal = products.reduce((prev, curr) => {
             return prev + curr.total
         }, 0)
@@ -89,7 +88,7 @@ router.post('/create', [
             shippingZipcode: zipcode,
             shippingState: state,
             deliveryMsg: message,
-            amount: parseFloat(parseFloat(orderTotal) + parseFloat(tax)).toFixed(2)
+            amount:parseFloat(orderTotal)
         })
         await order.save()
         res.json(order)
@@ -101,8 +100,8 @@ router.post('/create', [
     }
 })
 
-// route to make payment for an order
-router.put('/pay/:orderId', auth, async (req, res) => {
+// route to update payment status for an order
+router.put('/updatePayStatus/:orderId', auth, async (req, res) => {
     const orderId = req.params.orderId
     try {
         let order = await Order.findOne({
@@ -110,20 +109,65 @@ router.put('/pay/:orderId', auth, async (req, res) => {
         })
         if(!order){
             return res.status(400).json({
-                msg: "Order Not Found"
-            })
+                errors: [{
+                 msg: "Order Not Found"
+                }]
+             })
         }
-
-        // @todo implement payment gateway here 
-        // using stripe
-        // if payment was successful
-        // we update the payment status for the order
-        // and we update the timestamp for the payment
 
         order.paymentStatus = true
         order.paidAt = Date.now()
         await order.save()
         res.json(order)
+    } catch (error) {
+        res.status(500).json({
+            errors: error
+         })
+    }
+})
+
+router.post('/paymentsession/:orderId', async (req, res) => {
+
+    const orderId = req.params.orderId
+    try {
+
+        let order = await Order.findOne({
+            _id: orderId
+        })
+
+        if(!order){
+            return res.status(400).json({
+               errors: [{
+                msg: "Order Not Found"
+               }]
+            })
+        }
+
+        const sessionLineItems = order.products.map((product) => {
+            return {
+                price_data:{
+                    currency: 'usd',
+                    product_data: {
+                        name: product.name
+                    },
+                    unit_amount_decimal: parseFloat(product.price) * 100
+                },
+                quantity: product.quantity
+            }
+        })
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: sessionLineItems,
+            mode: 'payment',
+            success_url: `${process.env.FRONTEND_DEVELOPMENT_DOMAIN}/order/paymentstatus/${order._id}`,
+            cancel_url: `${process.env.FRONTEND_DEVELOPMENT_DOMAIN}/order/${order._id}`
+        })
+
+        res.json({
+            checkoutSessionId: session.id
+        })
+
     } catch (error) {
         res.status(500).json({
             errors: error

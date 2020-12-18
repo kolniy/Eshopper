@@ -10,6 +10,8 @@ import Spinner from "../../components/layouts/Spinner"
 const ProductsCategory = ({ match, getProductsByCategory, productsCategory, loading }) => {
         useEffect(() => {
             getProductsByCategory(match.params.categoryName.toLowerCase().trim())
+        document.documentElement.scrollTop = 0;
+		document.scrollingElement.scrollTop = 0;
         }, [getProductsByCategory, match.params.categoryName])
 
     return <>

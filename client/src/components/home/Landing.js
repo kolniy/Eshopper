@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 // import { Link } from 'react-router-dom'
 import CategoryList from "../../components/category/CategoryList"
@@ -13,6 +13,11 @@ const Landing = ({ isCategoryLoaded }) => {
 		e.preventDefault()
 		setCategoryNameState(e.target.innerHTML)
 	}
+
+	useEffect(() => {
+		document.documentElement.scrollTop = 0;
+		document.scrollingElement.scrollTop = 0;
+	}, [])
 
     return <>
         {/* carousel section for display some products */}

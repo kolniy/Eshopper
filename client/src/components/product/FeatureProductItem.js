@@ -15,11 +15,17 @@ const FeatureProductItem = ({ productInfo, addProductToCart, cart }) => {
                         <h2>${productInfo.price}</h2>
                         <Link to={`/product/${productInfo._id}`}><p>{productInfo.name}</p></Link>
                    {
-                       cart.find((item) => item.itemId === productInfo._id) !== undefined ? (
-                           <Link className="btn btn-default add-to-cart" to="/cart">View Cart</Link>
-                       ) : (
-                        <button onClick={e => addProductToCart(productInfo)} className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</button>
-                       )
+                      productInfo.availability <= 0 ? <>
+                        <p style={{fontWeight:"600", textTransform:"uppercase"}}>Currently out of stock</p>
+                      </> : <> 
+                          {
+                               cart.find((item) => item.itemId === productInfo._id) !== undefined ? (
+                                <Link className="btn btn-default add-to-cart" to="/cart">View Cart</Link>
+                            ) : (
+                             <button onClick={e => addProductToCart(productInfo)} className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</button>
+                            )
+                          }
+                      </>
                    }
                 </div>
                 <div className="product-overlay">
@@ -27,11 +33,17 @@ const FeatureProductItem = ({ productInfo, addProductToCart, cart }) => {
                         <h2>${productInfo.price}</h2>
                         <Link to={`/product/${productInfo._id}`}><p>{productInfo.name}</p></Link>
                         {
-                       cart.find((item) => item.itemId === productInfo._id) !== undefined ? (
-                           <Link className="btn btn-default add-to-cart" to="/cart">View Cart</Link>
-                       ) : (
-                        <button onClick={e => addProductToCart(productInfo)} className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</button>
-                       )
+                      productInfo.availability <= 0 ? <>
+                        <p style={{fontWeight:"600", textTransform:"uppercase"}}>Currently out of stock</p>
+                      </> : <> 
+                          {
+                               cart.find((item) => item.itemId === productInfo._id) !== undefined ? (
+                                <Link className="btn btn-default add-to-cart" to="/cart">View Cart</Link>
+                            ) : (
+                             <button onClick={e => addProductToCart(productInfo)} className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</button>
+                            )
+                          }
+                      </>
                    }
                     </div>
                 </div>

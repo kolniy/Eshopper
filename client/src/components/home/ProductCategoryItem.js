@@ -13,11 +13,17 @@ const ProductCategoryItem = ({ product,cart, addProductToCart }) => {
                     <h2>${product.price}</h2>
                     <Link to={`/product/${product._id}`}><p>{product.name}</p></Link>
                     {
-                       cart.find((item) => item.itemId === product._id) !== undefined ? (
-                           <Link className="btn btn-default add-to-cart" to="/cart">View Cart</Link>
-                       ) : (
-                        <button onClick={e => addProductToCart(product)} className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</button>
-                       )
+                      product.availability <= 0 ? <>
+                        <p style={{fontWeight:"600", textTransform:"uppercase"}}>Currently out of stock</p>
+                      </> : <>
+                        {
+                             cart.find((item) => item.itemId === product._id) !== undefined ? (
+                                <Link className="btn btn-default add-to-cart" to="/cart">View Cart</Link>
+                            ) : (
+                             <button onClick={e => addProductToCart(product)} className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart"></i>Add to cart</button>
+                            )
+                        }
+                      </>
                    }
                 </div>
             </div>

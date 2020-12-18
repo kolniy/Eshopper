@@ -3,17 +3,22 @@ import { connect } from "react-redux"
 import { getOrder } from "../../actions/order"
 import Spinner from "../layouts/Spinner"
 import Moment from "react-moment"
+import ProductOrderList from "./ProductOrderList"
+import OrderPaymentButton from "./OrderPaymentButton"
+import stripeimage from "../../images/stripe.png"
 
 const Order = ({ order, loading, match, getOrder }) => {
 
     useEffect(() => {
         getOrder(match.params.orderId)
+        document.documentElement.scrollTop = 0;
+		document.scrollingElement.scrollTop = 0;
     }, [match.params.orderId, getOrder])
 
     return <>
         {
             order === null && loading === true ? <Spinner /> : <><div className="container">
-            <div className="col-sm-9">
+            <div className="col-sm-8">
                 <div className="order-info">
                         <div className="shipping-section">
                                 <h2 className="text-center title">
@@ -83,20 +88,38 @@ const Order = ({ order, loading, match, getOrder }) => {
                 }
              </div>
             <div className="order-items-section">
-                            <h2 className="text-center title">
-                                       Your Ordered Items
-                                    </h2>
-                            </div>
+                    <h2 className="text-center title">
+                        Your Ordered Items
+                     </h2>
+                     <div className="ordered-products-list">
+                     <div className="ordered-list-item">
+                            <p className="order-product-image">Image</p>
+                            <p className="order-product-name">Name</p>
+                            <p className="order-product-quantity">Quantity</p>
+                            <p className="order-product-price">Price</p>
+                            <p className="order-product-total">Total</p>
                         </div>
-                    </div>
-                    <div className="col-sm-3">
-                        <div className="pay-action">
-                        <h2 className="text-center title">
-                            pay for your order
-                                    </h2>
-                        </div>
-                    </div>
-                </div></>
+                        {
+                            <ProductOrderList products={order.products} />
+                        }
+                         
+                     </div>
+             </div>
+        </div>
+     </div>
+        <div className="col-sm-4">
+                <div className="pay-action">
+            <h2 className="text-center title"> pay for your order </h2>
+            <div className="payment-button">
+                <OrderPaymentButton orderId={order._id} orderTotal={order.amount} orderStatus={order.paymentStatus} />
+            </div>
+            <div className="secure-payment-image">
+                <img className="img-responsive" src={stripeimage} alt="secure payment with stripe" />
+            </div>
+         </div>
+        </div>
+    </div>
+</>
         }
     </>
 }
