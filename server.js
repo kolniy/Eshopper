@@ -22,9 +22,9 @@ cloudinary.config({
 const PORT = process.env.PORT || 5000
 dbConnect()
 
-app.get('/', (req, res) => {
-    res.send("we're here");
-})
+// app.get('/', (req, res) => {
+//     res.send("we're here");
+// })
 
 //Application routes
 app.use('/api/users', usersRoute)
@@ -38,7 +38,6 @@ if(process.env.NODE_ENV === 'production'){
     // set static files
     app.use(express.static('client/build'))
 
-    
     app.get("/*", (req, res) => {
       res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'))
     })
