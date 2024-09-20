@@ -8,6 +8,7 @@
     "start": "node ./server.js",
     "server-dev": "env-cmd -f ./config/.dev.env nodemon server.js",
     "client": "npm start --prefix client",
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "serve-app": "concurrently \"npm run server-dev\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
